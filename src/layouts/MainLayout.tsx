@@ -1,61 +1,66 @@
-import * as React from 'react';
-import { Image } from 'react-native'
-import { BottomNavigation, Text } from 'react-native-paper';
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import MaterialIcons from "react-native-vector-icons/FontAwesome5";
+import { Text, View } from "react-native";
+import { PaperProvider } from "react-native-paper";
 
+const Tab = createMaterialBottomTabNavigator();
 
-const MusicRoute = () => <Text>Music</Text>;
+const HomeScreen = () => (
+  <PaperProvider>
+    <Text>home</Text>
+  </PaperProvider>
+);
+const SettingsScreen = () => (
+  <PaperProvider>
+    <Text>settings</Text>
+  </PaperProvider>
+);
 
-const AlbumsRoute = () => <Text>Albums</Text>;
-
-const RecentsRoute = () => <Text>Recents</Text>;
-
-const NotificationsRoute = () => <Text>Notifications</Text>;
-
-const MainLayout = () => {
-    const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: 'home', focusedIcon: 'home', unfocusedIcon: 'gallery_thumbnail', activeColor: "red"},
-    { key: 'gallery', title: 'Albums', focusedIcon: 'gallery_thumbnail' },
-    { key: 'panorama', title: 'Recents', focusedIcon: 'gallery_thumbnail' },
-  ]);
-
-  const renderScene = BottomNavigation.SceneMap({
-    home: MusicRoute,
-    gallery: AlbumsRoute,
-    panorama: RecentsRoute,
-  });
-
-    return (
-        <BottomNavigation 
-            navigationState={{ index, routes }}
-            onIndexChange={setIndex}
-            renderScene={renderScene}
-            compact={false}
-            labeled={false}
-            renderIcon={(props) => {
-              const { route } = props
-
-              console.log('props: ', props);
-              
-
-              const pathIcon = `../assets/icons/${route.focusedIcon}.svg`
-              console.log('pathIcon: ', pathIcon);
-              
-              // const icon = require(pathIcon)
-
-              return <Image
-                source={require(`../assets/icons/gallery_thumbnail.png`)}
-                style={{tintColor: 'red', width: 30, height: 30}}
-              />
-            }}
-            barStyle={{ 
-              backgroundColor: 'white', 
-              alignItems: 'center', 
-              borderTopColor: '#888098',
-              borderTopWidth: 1
-            }}
+const Routes = () => {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator
+        initialRouteName="Home"
+        activeColor="#3B28CC"
+        inactiveColor="#888098"
+        barStyle={{
+          backgroundColor: "#FFF",
+          borderTopColor: "#888098",
+          borderTopWidth: 1,
+        }}
+        labeled={false}
+      >
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="home" color={color} size={30} />
+            ),
+          }}
         />
-    )
-}
+        <Tab.Screen
+          name="Gallery"
+          component={SettingsScreen}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="images" color={color} size={30} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Details"
+          component={SettingsScreen}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="image" color={color} size={30} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+};
 
-export default MainLayout
+export default Routes;
