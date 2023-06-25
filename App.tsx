@@ -2,13 +2,29 @@ import { PaperProvider } from "react-native-paper";
 import { StyleSheet, Text, View } from "react-native";
 import MainLayout from "./src/layouts/MainLayout";
 
+import { useFonts } from 'expo-font';
+
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    'Poppins-bold': require('./assets/fonts/Poppins-Bold.ttf'),
+    'Poppins-medium': require('./assets/fonts/Poppins-Medium.ttf'),
+    'Poppins-regular': require('./assets/fonts/Poppins-Regular.ttf'),
+    'Poppins-light': require('./assets/fonts/Poppins-Light.ttf'),
+  });
+
+  console.log('fontsLoaded: ', fontsLoaded);
+  
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <View>
-      <PaperProvider>
-        <MainLayout />
-      </PaperProvider>
-    </View>
+    <PaperProvider theme={{
+      colors: {}
+    }}>
+      <MainLayout />
+    </PaperProvider>
   );
 }
 
