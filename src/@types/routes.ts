@@ -7,10 +7,10 @@ export type RouterType = {
     icon: string
 } 
 
-type RootStackParamList = {
+export type RootStackParamList = {
   Home: undefined;
   'List Photos': { search: string };
-  'Details': { image: PhotoModel } | undefined;
+  'Details': { id: string } | undefined;
 };
 
 export type PropsRoutesType<test extends keyof RootStackParamList> = MaterialBottomTabScreenProps<RootStackParamList, test>;

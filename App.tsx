@@ -10,6 +10,7 @@ export default function App() {
     'Poppins-medium': require('./assets/fonts/Poppins-Medium.ttf'),
     'Poppins-regular': require('./assets/fonts/Poppins-Regular.ttf'),
     'Poppins-light': require('./assets/fonts/Poppins-Light.ttf'),
+    'Poppins-thin': require('./assets/fonts/Poppins-Thin.ttf'),
   });
 
   console.log('fontsLoaded: ', fontsLoaded);

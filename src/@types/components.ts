@@ -1,4 +1,4 @@
-import { DimensionValue } from "react-native"
+import { DimensionValue, ImageSourcePropType } from "react-native"
 import PhotoModel from "../models/PhotoModel"
 
 export type ListImagesProps = {
@@ -7,3 +7,9 @@ export type ListImagesProps = {
         height: DimensionValue | undefined
     }
 }
+
+export type CardDetailProps = {
+    imgUrl: ImageSourcePropType
+    title: string
+    subtitle?: string | number
+} 

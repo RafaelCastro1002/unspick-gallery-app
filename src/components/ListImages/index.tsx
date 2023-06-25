@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react"
-import { FlatList, View } from "react-native"
+import { FlatList, TouchableOpacity, View } from "react-native"
 import PhotoModel from "../../models/PhotoModel"
 import { ImageItem, ContainerList } from "./styles"
 import {Dimensions} from 'react-native';
 import { ListImagesProps } from "../../@types/components"
 import { ActivityIndicator } from "react-native-paper"
+import { useNavigation } from "@react-navigation/native";
+import { MaterialBottomTabNavigationProp } from "@react-navigation/material-bottom-tabs";
+import { RootStackParamList } from "../../@types/routes";
 
 const ListImages = ({ loadImages: loadImagesParent, options }: ListImagesProps) => {
     const [images, setImages] = useState<PhotoModel[]>([])
     const [loading, setLoading] = useState(false)
     const windowWidth = Dimensions.get('window').width;
+
+    const navigation = useNavigation<MaterialBottomTabNavigationProp<RootStackParamList, "Home", undefined>>()
 
     const loadImages = async () => {
         setLoading(true)
@@ -54,16 +59,27 @@ const ListImages = ({ loadImages: loadImagesParent, options }: ListImagesProps) 
                     // flexWrap: 'wrap',
                     // justifyContent: 'space-between'
                 }}
-                keyExtractor={(item) => item.id.toString()}
+                // keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item, index }) => {
-                    return (<ImageItem source={{
-                            uri: item.urls.small,
-                        }}
-                        key={item.id + index}
-                        style={{
-                            width: calculateWidthImage
-                        }}
-                    />)
+                    return (
+                        <TouchableOpacity
+                            onPress={() => {
+                                return navigation.navigate('Details', {
+                                    id: item.id
+                                })
+                            }}
+                        >
+                            <ImageItem 
+                                source={{
+                                    uri: item.urls.small,
+                                }}
+                                key={item.id + index}
+                                style={{
+                                    width: calculateWidthImage
+                                }}
+                            />
+                        </TouchableOpacity>
+                    )
                 }}
                 ListFooterComponent={renderFooter}
                 onEndReached={loadImages}

@@ -13,7 +13,7 @@ const Home = ({ navigation }: PropsRoutesType<'Home'>) => {
     const loadImages = async () => {
         const response = await api.get('/photos/random', {
             params: {
-                count: 10
+                count: 30
             }
         })
 
@@ -35,7 +35,7 @@ const Home = ({ navigation }: PropsRoutesType<'Home'>) => {
                     value={search}
                     onChangeText={setSearch}
                     onEndEditing={() => {
-                        navigation.navigate('List Photos', {
+                        search !== '' && navigation.navigate('List Photos', {
                             search    
                         });
                     }}
