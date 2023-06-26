@@ -13,12 +13,18 @@ const ListImages = ({ loadImages: loadImagesParent, options }: ListImagesProps) 
     const [images, setImages] = useState<PhotoModel[]>([])
     const [loading, setLoading] = useState(false)
     const windowWidth = Dimensions.get('window').width;
+    const [noResults, setNoResults] = useState(false)
 
     const navigation = useNavigation<MaterialBottomTabNavigationProp<RootStackParamList, "Home", undefined>>()
 
     const loadImages = async () => {
+        if (noResults) return
         setLoading(true)
         const imagesLoaded = await loadImagesParent()
+
+        if (imagesLoaded.length === 0) {
+            setNoResults(true)
+        }
 
         setImages(images.concat(imagesLoaded))
         setLoading(false)
@@ -29,6 +35,12 @@ const ListImages = ({ loadImages: loadImagesParent, options }: ListImagesProps) 
             loadImages()
         }
     }, [])
+
+    useEffect(() => {
+        if (noResults) {
+            setNoResults(true)
+        }
+    }, [navigation])
 
     const renderFooter = () => {
         if (!loading) return null;

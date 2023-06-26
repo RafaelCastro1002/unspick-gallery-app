@@ -8,6 +8,7 @@ import { useIsFocused } from "@react-navigation/native";
 const Photos = ({ route, navigation }: PropsRoutesType<"List Photos">) => {
   const [page, setPage] = useState(10);
   const [per_page] = useState(30);
+  const [key, setKey] = useState(0)
 
   const [isRenderList, setRenderList] = useState(false);
 
@@ -16,9 +17,6 @@ const Photos = ({ route, navigation }: PropsRoutesType<"List Photos">) => {
   const verifyIfGoBack = () => {
     if (!route?.params?.search) {
       setRenderList(false);
-      console.log("aqui");
-
-      console.log("canGoBack: ", navigation.canGoBack());
 
       return navigation.goBack();
     } else {
@@ -39,6 +37,10 @@ const Photos = ({ route, navigation }: PropsRoutesType<"List Photos">) => {
     }
   }, [isFocused]);
 
+  useEffect(() => {
+    setKey((key) => key + 1)
+  }, [route])
+
   const loadImages = async () => {
     if (!isRenderList) return [];
 
@@ -49,8 +51,6 @@ const Photos = ({ route, navigation }: PropsRoutesType<"List Photos">) => {
         query: route.params.search,
       },
     });
-
-    console.log("response: ", response.data);
 
     const { results } = response.data;
 
@@ -71,6 +71,7 @@ const Photos = ({ route, navigation }: PropsRoutesType<"List Photos">) => {
           options={{
             height: "100%",
           }}
+          key={key}
         />
       ) : (
         <></>

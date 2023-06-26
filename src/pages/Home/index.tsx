@@ -17,9 +17,6 @@ const Home = ({ navigation }: PropsRoutesType<'Home'>) => {
             }
         })
 
-        console.log('response: ', response.data);
-        
-
         const results = response.data
 
         const formattedResults: PhotoModel[] = results.map((data: any) => new PhotoModel(data))

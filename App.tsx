@@ -13,9 +13,6 @@ export default function App() {
     'Poppins-thin': require('./assets/fonts/Poppins-Thin.ttf'),
   });
 
-  console.log('fontsLoaded: ', fontsLoaded);
-  
-
   if (!fontsLoaded) {
     return null;
   }

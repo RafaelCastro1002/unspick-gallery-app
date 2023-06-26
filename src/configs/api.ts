@@ -4,7 +4,7 @@ const api = () => {
     const createApi = axios.create({
         baseURL: 'https://api.unsplash.com',
         params: {
-            client_id: 'Uh_u1CgUCoqxaQuiepnLUiEkygwIV3KwaVhGo2bhDbI'
+            client_id: 'KW09zPvNTrEaPE4xNKExw2_6KOPlKBpkQ0vSVShPPeU'
         }
     })
 
